@@ -19,6 +19,6 @@ from django.views.generic import RedirectView
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
-    url(r'^edus/', include('edus.urls')),
+    url(r'^edus/', include('edus.urls', namespace='edus')),
     url(r'^$', RedirectView.as_view(url='/edus/', permanent=True)),
 ]

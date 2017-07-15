@@ -1,6 +1,39 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<h1> Welcome to hell </h1>
+
+<h1> {{ question.title }} </h1>
+<p> {{ question.content }} </p>
+
+<ul>
+    <li>date posted: {{ question.post_date }}</li>
+    <li>Solution found: {{question.solution_found}}</li>
+    <li> points: {{ question.points }} </li>
+</ul>
+
+
+<form action="{% url 'edus:upvote' question.pk %}" method="post">
+{% csrf_token %}
+<button name="upvote_question" value="upvote">upvote</button>
+<input type="submit" value="Vote" />
+</form>
+
+<h3> Replies </h3>
+
+{% if question.reply_set.all %}
+<ul>
+{% for reply in question.reply_set.all %}
+    <li> {{ reply.content }} </li>
+{% endfor %}
+</ul>
+
+{% else %}
+<h2> No replies yet </h2>
+
+{% endif %}
+
+
+
+
 
 {% endblock %}
