@@ -14,8 +14,13 @@
 
 <form action="{% url 'edus:upvote' question.pk %}" method="post">
 {% csrf_token %}
-<button name="upvote_question" value="upvote">upvote</button>
-<input type="submit" value="Vote" />
+<input type="submit" value="Upvote" />
+</form>
+
+
+<form action="{% url 'edus:downvote' question.pk %}" method="post">
+{% csrf_token %}
+<input type="submit" value="downvote" />
 </form>
 
 <h3> Replies </h3>

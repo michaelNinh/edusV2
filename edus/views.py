@@ -34,6 +34,15 @@ def upvote(request,pk):
     )))
 
 
+def downvote(request,pk):
+    question = get_object_or_404(Question, pk=pk)
+    question.points -= 1
+    question.save()
+    return HttpResponseRedirect(reverse('edus:question_detail', args=(
+        question.pk,
+    )))
+
+
 
 
 
