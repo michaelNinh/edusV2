@@ -20,7 +20,7 @@ class Question(models.Model):
         """
         Returns the url to access a particular blog-author instance.
         """
-        return reverse('question_detail', args=[str(self.id)])
+        return reverse('question_detail', args=[str(self.pk)])
 
     #titles could get long...
     def __str__(self):

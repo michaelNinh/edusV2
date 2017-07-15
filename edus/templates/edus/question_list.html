@@ -9,7 +9,7 @@
 
 {% for question in question_list %}
 <li> points {{ question.points }} Solution: {{ question.solution_found }} {{ question.title }}
-    <a href=" {{ question.get_absolute_url }} "> {{ question.title }}  </a>
+    <a href="{{ question.pk }}">Enter thread</a>
     </li>
 {% endfor %}
 </ul>
