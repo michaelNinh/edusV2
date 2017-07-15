@@ -12,8 +12,15 @@ class Question(models.Model):
     author = models.ForeignKey('UserEdus', null=False) #what does onDelete model.CASCADE do?
     solution_found = models.BooleanField(default=False, null=False)
     points = models.IntegerField(default=0, null=False)
+    post_date = models.DateField(default=date.today)
 
     #how to include media files like pictures??
+
+    def get_absolute_url(self):
+        """
+        Returns the url to access a particular blog-author instance.
+        """
+        return reverse('question_detail', args=[str(self.id)])
 
     #titles could get long...
     def __str__(self):
@@ -23,6 +30,7 @@ class Question(models.Model):
         return self.title
 
 class UserEdus(models.Model):
+    #WHEN USER SIGNS UP, A USEREDUS MODEL NEEDS TO BE CREATED AND SAVED
     user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
     bio = models.TextField(max_length=400, help_text="Enter your bio details here.")
 
@@ -42,9 +50,11 @@ class UserEdus(models.Model):
 
 class Reply(models.Model):
     content = models.TextField(max_length=10000, null=False)
-    author = models.ForeignKey(Question, null=False) #what does onDelete model.CASCADE do?
+    author = models.ForeignKey(UserEdus, null=False) #what does onDelete model.CASCADE do?
+    parent_question = models.ForeignKey(Question, null=True)
     correct_answer = models.BooleanField(default=False)
     points = models.IntegerField(default=0, null=False)
+    post_date = models.DateField(default=date.today)
 
     #how to include media files like pictures??
 
