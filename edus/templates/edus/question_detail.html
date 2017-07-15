@@ -25,6 +25,10 @@
 
 <h3> Replies </h3>
 
+
+
+<!--could this be another template?-->
+
 {% if question.reply_set.all %}
 <ul>
 {% for reply in question.reply_set.all %}
@@ -47,7 +51,15 @@
     <input type="submit" value="downvote" />
     </form>
 
+    <!--this button should only be visible to the author-->
+    <form action="{% url 'edus:correct_reply' reply.pk %}" method="post">
+    {% csrf_token %}
+    <input type="submit" value="correct_reply" />
+    </form>
+
 {% endfor %}
+
+
 
 {% else %}
 <h2> No replies yet </h2>

@@ -25,6 +25,8 @@ class QuestionDetailView(generic.DetailView):
     model = Question
 
 
+###i could inc/dec the number text on the frontend while backend updates
+
 def upvote(request,pk):
     question = get_object_or_404(Question, pk=pk)
     question.points += 1
@@ -58,6 +60,21 @@ def downvote_reply(request,pk,):
     reply = get_object_or_404(Reply, pk=pk)
     reply.points -= 1
     reply.save()
+    return HttpResponseRedirect(reverse('edus:question_detail', args=(
+        reply.parent_question.pk,
+    )))
+
+
+def correct_reply(request,pk,):
+    reply = get_object_or_404(Reply, pk=pk)
+    reply.correct_answer = True
+    reply.save()
+
+    parent_question = get_object_or_404(Question, pk=reply.parent_question.pk)
+    parent_question.solution_found = True
+    parent_question.save()
+
+
     return HttpResponseRedirect(reverse('edus:question_detail', args=(
         reply.parent_question.pk,
     )))
