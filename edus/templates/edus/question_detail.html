@@ -28,9 +28,26 @@
 {% if question.reply_set.all %}
 <ul>
 {% for reply in question.reply_set.all %}
+
     <li> {{ reply.content }} </li>
-{% endfor %}
+    <li> {{ reply.points }} </li>
+    <li> {{ reply.correct_answer }} </li>
+
+
 </ul>
+
+    <form action="{% url 'edus:upvote_reply' reply.pk %}" method="post">
+    {% csrf_token %}
+    <input type="submit" value="Upvote" />
+    </form>
+
+
+    <form action="{% url 'edus:downvote_reply' reply.pk %}" method="post">
+    {% csrf_token %}
+    <input type="submit" value="downvote" />
+    </form>
+
+{% endfor %}
 
 {% else %}
 <h2> No replies yet </h2>
