@@ -31,7 +31,8 @@ class Question(models.Model):
 
 class UserEdus(models.Model):
     #WHEN USER SIGNS UP, A USEREDUS MODEL NEEDS TO BE CREATED AND SAVED
-    user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
+
+    user = models.OneToOneField(User, on_delete=models.SET_NULL, null=True)
     bio = models.TextField(max_length=400, help_text="Enter your bio details here.")
 
     # a feature like this would return the profile page?
@@ -65,6 +66,27 @@ class Reply(models.Model):
         String for representing the Model object.
         """
         return self.content
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

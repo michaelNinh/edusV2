@@ -2,6 +2,7 @@ from django.http import HttpResponseRedirect
 from django.shortcuts import render, get_object_or_404
 from django.urls import reverse
 from django.views import generic
+from django.views.generic import CreateView
 
 from . models import UserEdus, Question, Reply
 
@@ -79,7 +80,42 @@ def correct_reply(request,pk,):
         reply.parent_question.pk,
     )))
 
+#login mixin can be added here
+class ReplyCreate(CreateView):
+    """
+    creates a comment object
+    """
+    model = Reply #specify which model can be created here
+    fields = ['content', ] # which fields can be openly editted
 
+    def get_context_data(self, **kwargs):
+        """
+        attach parent blog so I can display it on the comment template
+        """
+        #refer to the super view to generate context base
+        context = super(ReplyCreate, self).get_context_data(**kwargs)
+        #set 'blog' to equal queryset of Blog objects matching pk
+        context['question'] = get_object_or_404(Question, pk=self.kwargs['pk'])
+        #this will return a blog object
+        return context
+
+    def form_valid(self, form):
+        """
+        add associate blog and author to form.
+        """
+        #this is setting the author of the form
+        #this has to be in lowercase for the association to work!
+        form.instance.author = self.request.user.useredus
+        #associate comment with blog based on passed
+        form.instance.parent_question = get_object_or_404(Question, pk = self.kwargs['pk'])
+        #the super class carried the validator function
+        return super(ReplyCreate, self).form_valid(form)
+
+    def get_success_url(self):
+        """
+        After posting comment return to associated blog.
+        """
+        return reverse('edus:question_detail', kwargs={'pk': self.kwargs['pk'], })
 
 
 

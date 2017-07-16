@@ -7,6 +7,7 @@
 
 <ul>
     <li>date posted: {{ question.post_date }}</li>
+    <li>author: {{ question.author }}</li>
     <li>Solution found: {{question.solution_found}}</li>
     <li> points: {{ question.points }} </li>
 </ul>
@@ -23,19 +24,21 @@
 <input type="submit" value="downvote" />
 </form>
 
-<h3> Replies </h3>
 
+<a href="{% url 'edus:write_reply' question.pk %}"> WRITE A RESPONSE </a>
 
 
 <!--could this be another template?-->
+<h3> Replies </h3>
 
 {% if question.reply_set.all %}
 <ul>
 {% for reply in question.reply_set.all %}
 
-    <li> {{ reply.content }} </li>
-    <li> {{ reply.points }} </li>
-    <li> {{ reply.correct_answer }} </li>
+    <li>content: {{ reply.content }} </li>
+    <li>author: {{ reply.author }}</li>
+    <li>points: {{ reply.points }} </li>
+    <li>Correct solution? {{ reply.correct_answer }} </li>
 
 
 </ul>
