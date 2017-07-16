@@ -6,6 +6,7 @@
 <h1> {{ question.title }} </h1>
 <p> {{ question.content }} </p>
 
+
 <ul>
     <li>date posted: {{ question.post_date }}</li>
     <li>author: {{ question.author }}</li>
@@ -25,7 +26,16 @@
 <input type="submit" value="downvote" />
 </form>
 
+{% if question.author == user.useredus %}
 
+<h>HIYA</h>
+
+{% endif %}
+
+
+
+
+<!--WRITE RESPONSE-->
 <a href="{% url 'edus:write_reply' question.pk %}"> WRITE A RESPONSE </a>
 
 
