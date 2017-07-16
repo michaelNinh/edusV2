@@ -1,9 +1,11 @@
+from django.contrib import messages
 from django.http import HttpResponseRedirect
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect
 from django.urls import reverse
 from django.views import generic
-from django.views.generic import CreateView
+from django.views.generic import CreateView, UpdateView
 
+from . forms import EditQuestionForm
 from . models import UserEdus, Question, Reply
 
 
@@ -120,6 +122,16 @@ class ReplyCreate(CreateView):
 
 
 
+class QuestionUpdate(UpdateView):
+    model = Question
+    fields = ['title', 'content']
+    template_name_suffix = '_update_form'
+
+    def get_success_url(self):
+        """
+        After posting comment return to associated blog.
+        """
+        return reverse('edus:question_detail', kwargs={'pk': self.kwargs['pk'], })
 
 
 

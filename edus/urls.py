@@ -8,6 +8,8 @@ urlpatterns = [
     url(r'^questions/$', views.QuestionListView.as_view(), name='questions'),
     url(r'^questions/(?P<pk>\d+)$', views.QuestionDetailView.as_view(), name='question_detail'),
 
+    url(r'^questions/(?P<pk>\d+)/edit/$', views.QuestionUpdate.as_view(), name='edit_question'),
+
     # actions for upvote/downvote
     url(r'^questions/(?P<pk>\d+)/upvote/$', views.upvote, name='upvote'),
     url(r'^questions/(?P<pk>\d+)/downvote/$', views.downvote, name='downvote'),

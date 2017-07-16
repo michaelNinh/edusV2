@@ -26,9 +26,11 @@
 <input type="submit" value="downvote" />
 </form>
 
+
+<!--USER PERMISSION BUTTONS-->
 {% if question.author == user.useredus %}
 
-<h>HIYA</h>
+<a href="{% url 'edus:edit_question' question.pk %}"> Edit question </a>
 
 {% endif %}
 
