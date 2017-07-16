@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load custom_tags %}
 
 {% block content %}
 
@@ -33,7 +34,7 @@
 
 {% if question.reply_set.all %}
 <ul>
-{% for reply in question.reply_set.all %}
+{% for reply in question.reply_set.all|sort_by:'-points'|sort_by:'-correct_answer' %}
 
     <li>content: {{ reply.content }} </li>
     <li>author: {{ reply.author }}</li>
