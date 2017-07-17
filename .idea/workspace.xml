@@ -2,9 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="85e9bce7-a566-4ffc-932b-5cf680e1197d" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/edus/models.py" afterPath="$PROJECT_DIR$/edus/models.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/edus/templates/edus/question_detail.html" afterPath="$PROJECT_DIR$/edus/templates/edus/question_detail.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/edus/views.py" afterPath="$PROJECT_DIR$/edus/views.py" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -63,8 +61,8 @@
       <file leaf-file-name="question_detail.html" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/edus/templates/edus/question_detail.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="343">
-              <caret line="87" column="49" lean-forward="false" selection-start-line="87" selection-start-column="41" selection-end-line="87" selection-end-column="49" />
+            <state relative-caret-position="251">
+              <caret line="81" column="4" lean-forward="false" selection-start-line="81" selection-start-column="4" selection-end-line="81" selection-end-column="4" />
               <folding />
             </state>
           </provider>
@@ -576,14 +574,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/edus/urls.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="238">
-          <caret line="15" column="38" lean-forward="false" selection-start-line="15" selection-start-column="0" selection-end-line="16" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/edus/views.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="305">
@@ -594,10 +584,18 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/edus/urls.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="238">
+          <caret line="15" column="38" lean-forward="false" selection-start-line="15" selection-start-column="0" selection-end-line="16" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/edus/templates/edus/question_detail.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="343">
-          <caret line="87" column="49" lean-forward="false" selection-start-line="87" selection-start-column="41" selection-end-line="87" selection-end-column="49" />
+        <state relative-caret-position="251">
+          <caret line="81" column="4" lean-forward="false" selection-start-line="81" selection-start-column="4" selection-end-line="81" selection-end-column="4" />
           <folding />
         </state>
       </provider>

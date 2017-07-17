@@ -44,13 +44,6 @@
 
 {% endif %}
 
-
-
-
-
-
-
-
 <!--USER PERMISSION BUTTONS-->
 {% if question.author == user.useredus %}
 
@@ -82,47 +75,73 @@
 
 </ul>
 
+
+<!--this button should only be visible to the author-->
+<form action="{% url 'edus:correct_reply' reply.pk %}" method="post">
+    {% csrf_token %}
+    <input type="submit" value="correct_reply" />
+</form>
+
 <!--display vote buttons, depending if vote has been cast-->
 {% if request.user.useredus in reply.voters.all %}
 
-<form action="{% url 'edus:upvote_reply' question.pk %}" method="post">
+<form action="{% url 'edus:upvote_reply' reply.pk %}" method="post">
 {% csrf_token %}
 <input type="submit" disabled="disabled" value="Upvote" />
 </form>
 
-<form action="{% url 'edus:downvote_reply' question.pk %}" method="post">
+<form action="{% url 'edus:downvote_reply' reply.pk %}" method="post">
 {% csrf_token %}
 <input type="submit" disabled="disabled" value="downvote" />
 </form>
 
 {% else %}
 
-<form action="{% url 'edus:upvote_reply' question.pk %}" method="post">
+<form action="{% url 'edus:upvote_reply' reply.pk %}" method="post">
 {% csrf_token %}
 <input type="submit" value="Upvote" />
 </form>
 
-<form action="{% url 'edus:downvote_reply' question.pk %}" method="post">
+<form action="{% url 'edus:downvote_reply' reply.pk %}" method="post">
 {% csrf_token %}
 <input type="submit" value="downvote" />
 </form>
 
 {% endif %}
 
-
-
-
 {% endfor %}
-
-
 
 {% else %}
 <h2> No replies yet </h2>
 
 {% endif %}
 
-
-
-
-
 {% endblock %}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
