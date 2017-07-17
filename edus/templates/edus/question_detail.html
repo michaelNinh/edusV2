@@ -76,15 +76,17 @@
 </ul>
 
 
-<!--this button should only be visible to the author-->
+<!--allow correct reply by author only-->
+{% if reply.author == user.useredus %}
 <form action="{% url 'edus:correct_reply' reply.pk %}" method="post">
     {% csrf_token %}
     <input type="submit" value="correct_reply" />
 </form>
+{% endif %}
 
 <!--display vote buttons, depending if vote has been cast-->
 {% if request.user.useredus in reply.voters.all %}
-
+<!--if voted already, disable-->
 <form action="{% url 'edus:upvote_reply' reply.pk %}" method="post">
 {% csrf_token %}
 <input type="submit" disabled="disabled" value="Upvote" />
@@ -95,6 +97,7 @@
 <input type="submit" disabled="disabled" value="downvote" />
 </form>
 
+<!--if have not voted yet, enable-->
 {% else %}
 
 <form action="{% url 'edus:upvote_reply' reply.pk %}" method="post">
@@ -107,9 +110,12 @@
 <input type="submit" value="downvote" />
 </form>
 
+<!--end of vote buttons-->
 {% endif %}
 
+<!--end of reply div-->
 {% endfor %}
+
 
 {% else %}
 <h2> No replies yet </h2>
