@@ -58,6 +58,8 @@ class Reply(models.Model):
     points = models.IntegerField(default=1, null=False)
     post_date = models.DateField(default=date.today)
 
+    voters = models.ManyToManyField(UserEdus, null=True, related_name='voters_reply')
+
     #how to include media files like pictures??
 
     #how to represent this in admin dashboard?

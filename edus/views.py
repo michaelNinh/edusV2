@@ -33,10 +33,12 @@ class QuestionDetailView(generic.DetailView):
 def upvote(request,pk):
     question = get_object_or_404(Question, pk=pk)
     question.points += 1
-
-    # question.voters = request.user.useredus
     question.voters.add(request.user.useredus)
-    print(question.voters.all())
+
+    if request.user.useredus in question.voters.all():
+        print('present')
+    else:
+        print('not')
 
     question.save()
     return HttpResponseRedirect(reverse('edus:question_detail', args=(
@@ -47,6 +49,8 @@ def upvote(request,pk):
 def downvote(request,pk):
     question = get_object_or_404(Question, pk=pk)
     question.points -= 1
+    question.voters.add(request.user.useredus)
+
     question.save()
 
     return HttpResponseRedirect(reverse('edus:question_detail', args=(
@@ -59,6 +63,7 @@ def downvote(request,pk):
 def upvote_reply(request,pk,):
     reply = get_object_or_404(Reply, pk=pk)
     reply.points += 1
+    reply.voters.add(request.user.useredus)
     reply.save()
     return HttpResponseRedirect(reverse('edus:question_detail', args=(
         reply.parent_question.pk,
@@ -68,6 +73,7 @@ def upvote_reply(request,pk,):
 def downvote_reply(request,pk,):
     reply = get_object_or_404(Reply, pk=pk)
     reply.points -= 1
+    reply.voters.add(request.user.useredus)
     reply.save()
     return HttpResponseRedirect(reverse('edus:question_detail', args=(
         reply.parent_question.pk,

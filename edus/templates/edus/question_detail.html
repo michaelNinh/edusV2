@@ -15,26 +15,44 @@
     <li>votes: {{ question.voters }}</li>
     <li>debug line: {{ request.user.useredus }}</li>
 
-
 </ul>
 
+<!--display vote buttons, depending if vote has been cast-->
+{% if request.user.useredus in question.voters.all %}
+
+<form action="{% url 'edus:upvote' question.pk %}" method="post">
+{% csrf_token %}
+<input type="submit" disabled="disabled" value="Upvote" />
+</form>
+
+<form action="{% url 'edus:downvote' question.pk %}" method="post">
+{% csrf_token %}
+<input type="submit" disabled="disabled" value="downvote" />
+</form>
+
+{% else %}
 
 <form action="{% url 'edus:upvote' question.pk %}" method="post">
 {% csrf_token %}
 <input type="submit" value="Upvote" />
 </form>
 
-
 <form action="{% url 'edus:downvote' question.pk %}" method="post">
 {% csrf_token %}
 <input type="submit" value="downvote" />
 </form>
 
+{% endif %}
+
+
+
+
+
+
+
 
 <!--USER PERMISSION BUTTONS-->
 {% if question.author == user.useredus %}
-
-
 
 <form action="{% url 'edus:edit_question' question.pk %}" method="">
 {% csrf_token %}
@@ -62,25 +80,37 @@
     <li>points: {{ reply.points }} </li>
     <li>Correct solution? {{ reply.correct_answer }} </li>
 
-
 </ul>
 
-    <form action="{% url 'edus:upvote_reply' reply.pk %}" method="post">
-    {% csrf_token %}
-    <input type="submit" value="Upvote" />
-    </form>
+<!--display vote buttons, depending if vote has been cast-->
+{% if request.user.useredus in reply.voters.all %}
+
+<form action="{% url 'edus:upvote_reply' question.pk %}" method="post">
+{% csrf_token %}
+<input type="submit" disabled="disabled" value="Upvote" />
+</form>
+
+<form action="{% url 'edus:downvote_reply' question.pk %}" method="post">
+{% csrf_token %}
+<input type="submit" disabled="disabled" value="downvote" />
+</form>
+
+{% else %}
+
+<form action="{% url 'edus:upvote_reply' question.pk %}" method="post">
+{% csrf_token %}
+<input type="submit" value="Upvote" />
+</form>
+
+<form action="{% url 'edus:downvote_reply' question.pk %}" method="post">
+{% csrf_token %}
+<input type="submit" value="downvote" />
+</form>
+
+{% endif %}
 
 
-    <form action="{% url 'edus:downvote_reply' reply.pk %}" method="post">
-    {% csrf_token %}
-    <input type="submit" value="downvote" />
-    </form>
 
-    <!--this button should only be visible to the author-->
-    <form action="{% url 'edus:correct_reply' reply.pk %}" method="post">
-    {% csrf_token %}
-    <input type="submit" value="correct_reply" />
-    </form>
 
 {% endfor %}
 
