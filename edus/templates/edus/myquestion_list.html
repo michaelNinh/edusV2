@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+{% if user.useredus.question_set.all %}
+
+
+<ul>
+{% for question in user.useredus.question_set.all %}
+<li> points {{ question.points }} Solution: {{ question.solution_found }} {{ question.title }}
+    <a href="{% url 'edus:question_detail' question.pk %}">Enter thread</a>
+    </li>
+{% endfor %}
+</ul>
+
+{% else %}
+
+<h1> No questions have been asked </h1>
+
+{% endif  %}
+
+{% endblock %}

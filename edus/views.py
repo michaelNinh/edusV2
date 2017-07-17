@@ -8,8 +8,6 @@ from .forms import SignUpForm
 from django.contrib.auth import login, authenticate
 from . models import UserEdus, Question, Reply
 
-
-
 def index(request):
     """
     View function for home page of site.
@@ -22,11 +20,18 @@ def index(request):
 
 class QuestionListView(generic.ListView):
     model = Question
-    paginate_by = 5
+    paginate_by = 10
+
+
+class MyQuestionListView(generic.ListView):
+    model = Question
+    paginate_by = 10
+    template_name = 'edus/myquestion_list.html'
+
+
 
 class QuestionDetailView(generic.DetailView):
     model = Question
-
 
 ###i could inc/dec the number text on the frontend while backend updates
 
@@ -130,6 +135,35 @@ class ReplyCreate(CreateView):
         After posting comment return to associated blog.
         """
         return reverse('edus:question_detail', kwargs={'pk': self.kwargs['pk'], })
+
+# login mixin can be inserted here
+class QuestionCreate(CreateView):
+    """
+    creates a Quetion object
+    """
+    model = Question #specify which model can be created here
+    fields = ['title', 'content'] # which fields can be openly editted
+
+    # once classrooms are implemented pass that data here
+    # def get_context_data(self, **kwargs):
+
+    def form_valid(self, form):
+        """
+        add associate blog and author to form.
+        """
+
+        form.instance.author = self.request.user.useredus
+        #once classrooms are implemented, pass in here
+        # form.instance.parent_classroom etc...
+        #the super class carried the validator function
+        return super(QuestionCreate, self).form_valid(form)
+
+    def get_success_url(self):
+        """
+        After posting comment return to associated blog.
+        """
+        return reverse('edus:question_detail', kwargs={'pk': self.object.pk})
+
 
 class QuestionUpdate(UpdateView):
     model = Question
