@@ -21,4 +21,5 @@ urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^edus/', include('edus.urls', namespace='edus')),
     url(r'^$', RedirectView.as_view(url='/edus/', permanent=True)),
+    url('^accounts/', include('django.contrib.auth.urls')), #for auth
 ]
