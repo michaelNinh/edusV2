@@ -19,4 +19,7 @@ urlpatterns = [
 
     url(r'^questions/(?P<pk>\d+)/write_reply/$', views.ReplyCreate.as_view(), name='write_reply'),
 
+    # account creation /edus/signup
+    url(r'^signup/$', views.signup, name='signup'),
+
     ]

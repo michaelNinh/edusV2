@@ -4,8 +4,8 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.urls import reverse
 from django.views import generic
 from django.views.generic import CreateView, UpdateView
-
-from . forms import EditQuestionForm
+from .forms import SignUpForm
+from django.contrib.auth import login, authenticate
 from . models import UserEdus, Question, Reply
 
 
@@ -131,9 +131,6 @@ class ReplyCreate(CreateView):
         """
         return reverse('edus:question_detail', kwargs={'pk': self.kwargs['pk'], })
 
-
-
-
 class QuestionUpdate(UpdateView):
     model = Question
     fields = ['title', 'content']
@@ -144,6 +141,24 @@ class QuestionUpdate(UpdateView):
         After posting comment return to associated blog.
         """
         return reverse('edus:question_detail', kwargs={'pk': self.kwargs['pk'], })
+
+
+def signup(request):
+    if request.method == 'POST':
+        form = SignUpForm(request.POST)
+        if form.is_valid():
+            user = form.save()
+            user.refresh_from_db()  # load the profile instance created by the signal
+            user.useredus.email = form.cleaned_data.get('email')
+            user.save()
+            raw_password = form.cleaned_data.get('password1')
+            user = authenticate(username=user.username, password=raw_password)
+            login(request, user)
+            return HttpResponseRedirect(reverse('edus:questions'))
+    else:
+        form = SignUpForm()
+    return render(request, 'signup.html', {'form': form})
+
 
 
 

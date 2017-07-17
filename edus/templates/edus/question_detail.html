@@ -73,7 +73,7 @@
 
 
 <!--allow correct reply by author only-->
-{% if reply.author == user.useredus %}
+{% if reply.parent_question.author == user.useredus %}
 <form action="{% url 'edus:correct_reply' reply.pk %}" method="post">
     {% csrf_token %}
     <input type="submit" value="correct_reply" />

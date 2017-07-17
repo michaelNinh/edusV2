@@ -1,7 +1,10 @@
 from django.db import models
 from datetime import date
 from django.urls import reverse  # Used to generate URLs by reversing the URL patterns
-from django.contrib.auth.models import User  # Blog author or commenter
+from django.contrib.auth.models import User
+from django.dispatch import receiver #for user creation
+from django.db.models.signals import post_save #for user creation
+
 
 # Create your models here.
 
@@ -9,6 +12,7 @@ class UserEdus(models.Model):
     #WHEN USER SIGNS UP, A USEREDUS MODEL NEEDS TO BE CREATED AND SAVED
 
     user = models.OneToOneField(User, on_delete=models.SET_NULL, null=True)
+    email = models.CharField(max_length=500, help_text="Your email", null=True)
     bio = models.TextField(max_length=400, help_text="Enter your bio details here.")
 
     # a feature like this would return the profile page?
@@ -17,6 +21,14 @@ class UserEdus(models.Model):
     #     Returns the url to access a particular blog-author instance.
     #     """
     #     return reverse('blogs_by_author', args=[str(self.id)])
+
+
+    # this has to do something with extending default django User model
+    @receiver(post_save, sender=User)
+    def update_user_profile(sender, instance, created, **kwargs):
+        if created:
+            UserEdus.objects.create(user=instance)
+        instance.useredus.save()
 
     def __str__(self):
         """
