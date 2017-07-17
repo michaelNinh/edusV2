@@ -12,6 +12,10 @@
     <li>author: {{ question.author }}</li>
     <li>Solution found: {{question.solution_found}}</li>
     <li> points: {{ question.points }} </li>
+    <li>votes: {{ question.voters }}</li>
+    <li>debug line: {{ request.user.useredus }}</li>
+
+
 </ul>
 
 
@@ -30,7 +34,12 @@
 <!--USER PERMISSION BUTTONS-->
 {% if question.author == user.useredus %}
 
-<a href="{% url 'edus:edit_question' question.pk %}"> Edit question </a>
+
+
+<form action="{% url 'edus:edit_question' question.pk %}" method="">
+{% csrf_token %}
+<input type="submit" value="Edit" />
+</form>
 
 {% endif %}
 
