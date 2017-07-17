@@ -11,8 +11,6 @@ class UserEdus(models.Model):
     user = models.OneToOneField(User, on_delete=models.SET_NULL, null=True)
     bio = models.TextField(max_length=400, help_text="Enter your bio details here.")
 
-    votes = models.ForeignKey('Question', null=True)
-
     # a feature like this would return the profile page?
     # def get_absolute_url(self):
     #     """
@@ -33,6 +31,8 @@ class Question(models.Model):
     solution_found = models.BooleanField(default=False, null=False)
     points = models.IntegerField(default=1, null=False)
     post_date = models.DateField(default=date.today)
+
+    voters = models.ManyToManyField(UserEdus, null=True, related_name='voters')
 
     #how to include media files like pictures??
 
@@ -70,7 +70,21 @@ class Reply(models.Model):
 
 
 
+#########################
 
+class Reporter(models.Model):
+    first_name = models.CharField(max_length=30)
+
+    def __unicode__(self):
+        return self.first_name
+
+
+class Article(models.Model):
+    title = models.CharField(max_length=100)
+    reporter = models.ForeignKey(Reporter) #a report can have many articles , but they all belong to one reporter?
+
+    def __unicode__(self):
+        return self.title
 
 
 

@@ -34,12 +34,9 @@ def upvote(request,pk):
     question = get_object_or_404(Question, pk=pk)
     question.points += 1
 
-    ################
-    request.user.useredus.votes = question
-    # print(request.user.useredus.votes)
-    ##############THIS SHIT ISN'T WORKING
-
-
+    # question.voters = request.user.useredus
+    question.voters.add(request.user.useredus)
+    print(question.voters.all())
 
     question.save()
     return HttpResponseRedirect(reverse('edus:question_detail', args=(
