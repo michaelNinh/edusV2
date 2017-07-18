@@ -1,4 +1,5 @@
 from django.contrib import messages
+from django.contrib.auth.models import User
 from django.http import HttpResponseRedirect
 from django.shortcuts import render, get_object_or_404, redirect
 from django.urls import reverse
@@ -26,7 +27,12 @@ class QuestionListView(generic.ListView):
 class MyQuestionListView(generic.ListView):
     model = Question
     paginate_by = 10
+    # queryset = Question.objects.filter(author=request.user)
     template_name = 'edus/myquestion_list.html'
+
+    def get_queryset(self):
+        return self.request.user.useredus.question_set.all()
+
 
 class OpenQuestionListView(generic.ListView):
     model = Question
