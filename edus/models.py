@@ -46,7 +46,7 @@ class Question(models.Model):
 
     voters = models.ManyToManyField(UserEdus, null=True, related_name='voters')
 
-    document = models.FileField(upload_to='MEDIA_ROOT/documents/', null=True,)
+    image = models.ImageField(upload_to='MEDIA_ROOT/documents/', null=True,)
 
     #how to include media files like pictures??
 

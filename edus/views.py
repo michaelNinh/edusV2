@@ -154,7 +154,7 @@ class QuestionCreate(CreateView):
     creates a Quetion object
     """
     model = Question #specify which model can be created here
-    fields = ['title', 'content','document'] # which fields can be openly editted
+    fields = ['title', 'content','image'] # which fields can be openly editted
 
     # once classrooms are implemented pass that data here
     # def get_context_data(self, **kwargs):
@@ -164,7 +164,7 @@ class QuestionCreate(CreateView):
         """
         add associate blog and author to form.
         """
-        form.instance.document = self.request.FILES['document']
+        form.instance.document = self.request.FILES['image']
         form.instance.author = self.request.user.useredus
         #once classrooms are implemented, pass in here
         # form.instance.parent_classroom etc...
