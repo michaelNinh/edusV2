@@ -15,8 +15,9 @@
     <li>votes: {{ question.voters }}</li>
     <li>debug line: {{ request.user.useredus }}</li>
 
-
+    {% if question.image %}
     <img src="{{ question.image.url }}" alt="My image"/>
+    {% endif %}
 
 </ul>
 

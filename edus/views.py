@@ -164,7 +164,13 @@ class QuestionCreate(CreateView):
         """
         add associate blog and author to form.
         """
-        form.instance.document = self.request.FILES['image']
+
+        # allows for asking questions without uploading images
+        if self.request.FILES == {}:
+            pass
+        else:
+            form.instance.document = self.request.FILES['image']
+
         form.instance.author = self.request.user.useredus
         #once classrooms are implemented, pass in here
         # form.instance.parent_classroom etc...
