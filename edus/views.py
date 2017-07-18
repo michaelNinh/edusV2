@@ -28,7 +28,13 @@ class MyQuestionListView(generic.ListView):
     paginate_by = 10
     template_name = 'edus/myquestion_list.html'
 
+class OpenQuestionListView(generic.ListView):
+    model = Question
+    paginate_by = 10
+    queryset = Question.objects.filter(solution_found=False)
+    template_name = 'edus/openquestion_list.html'
 
+    #pass context data
 
 class QuestionDetailView(generic.DetailView):
     model = Question

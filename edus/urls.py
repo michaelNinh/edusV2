@@ -6,7 +6,7 @@ urlpatterns = [
 
     url(r'^$', views.index, name="index"),
     url(r'^questions/$', views.QuestionListView.as_view(), name='questions'),
-
+    url(r'^open-questions/$', views.OpenQuestionListView.as_view(), name='open_questions'),
     url(r'^my-questions/$', views.MyQuestionListView.as_view(), name='my_questions'),
 
     # question related urls

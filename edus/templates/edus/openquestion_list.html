@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+{% if question_list %}
+
+
+<ul>
+
+{% for question in question_list %}
+<li> points {{ question.points }} Solution: {{ question.solution_found }} {{ question.title }}
+    <a href="{{ question.pk }}">Enter thread</a>
+    </li>
+{% endfor %}
+</ul>
+
+{% else %}
+
+<h1> No questions have been asked </h1>
+
+{% endif  %}
+
+{% endblock %}
