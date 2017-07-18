@@ -46,6 +46,8 @@ class Question(models.Model):
 
     voters = models.ManyToManyField(UserEdus, null=True, related_name='voters')
 
+    document = models.FileField(upload_to='MEDIA_ROOT/documents/', null=True,)
+
     #how to include media files like pictures??
 
     def get_absolute_url(self):
@@ -83,22 +85,11 @@ class Reply(models.Model):
         return self.content
 
 
-
-#########################
-
-class Reporter(models.Model):
-    first_name = models.CharField(max_length=30)
-
-    def __unicode__(self):
-        return self.first_name
-
-
-class Article(models.Model):
-    title = models.CharField(max_length=100)
-    reporter = models.ForeignKey(Reporter) #a report can have many articles , but they all belong to one reporter?
-
-    def __unicode__(self):
-        return self.title
+# model for uploading media
+class Document(models.Model):
+    description = models.CharField(max_length=2000, blank=True)
+    document = models.FileField(upload_to='MEDIA_ROOT/documents/')
+    uploaded_at = models.DateTimeField(auto_now_add=True)
 
 
 

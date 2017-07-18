@@ -154,20 +154,20 @@ class QuestionCreate(CreateView):
     creates a Quetion object
     """
     model = Question #specify which model can be created here
-    fields = ['title', 'content'] # which fields can be openly editted
+    fields = ['title', 'content','document'] # which fields can be openly editted
 
     # once classrooms are implemented pass that data here
     # def get_context_data(self, **kwargs):
+
 
     def form_valid(self, form):
         """
         add associate blog and author to form.
         """
-
+        form.instance.document = self.request.FILES['document']
         form.instance.author = self.request.user.useredus
         #once classrooms are implemented, pass in here
         # form.instance.parent_classroom etc...
-        #the super class carried the validator function
         return super(QuestionCreate, self).form_valid(form)
 
     def get_success_url(self):
