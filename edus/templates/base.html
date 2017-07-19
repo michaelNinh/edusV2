@@ -19,14 +19,20 @@
 <ul class="nav nav-tabs">
 
 
-  {% if user.is_authenticated %}
-
+    {% if user.is_authenticated %}
     <li role="presentation" class="active"><a href="{% url 'logout' %}">Logout</a></li>
     {% else %}
     <li role="presentation" class="active"><a href="{% url 'login' %}">Login</a></li>
     {% endif %}
 
-  <li role="presentation"><a href="{% url 'edus:questions' %}">All questions</a></li>
+    <!--fake dyanmic labeling of NEW-->
+
+    {% if new_questions == 'true' %}
+    <li role="presentation"><a href="{% url 'edus:questions' %}">All questions *NEW*</a></li>
+    {% else %}
+    <li role="presentation"><a href="{% url 'edus:questions' %}">All questions</a></li>
+    {% endif %}
+
   <li role="presentation"><a href="{% url 'edus:my_questions' %}">My questions</a></li>
   <li role="presentation"><a href="{% url 'edus:write_question' %}">Ask</a></li>
 
@@ -36,6 +42,9 @@
 </ul>
 
 <body>
+
+{{ new_questions }}
+
 
 <div class="row">
 

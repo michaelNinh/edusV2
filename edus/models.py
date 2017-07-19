@@ -98,7 +98,7 @@ class Document(models.Model):
 # if new_signal == TRUE, then there are new questions
 class NewUpdateSign(models.Model):
     new_signal = models.BooleanField(null=False, default=False)
-    last_update = models.DateTimeField(auto_now_add=True)
+    last_update = models.DateTimeField(auto_now_add=True, blank=True)
     signal_id = models.CharField(null=False,blank= True, max_length= 200)
 
     @receiver(post_save, sender=Question)
