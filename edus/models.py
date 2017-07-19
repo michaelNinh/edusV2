@@ -6,6 +6,7 @@ from django.dispatch import receiver #for user creation
 from django.db.models.signals import post_save #for user creation
 
 
+
 # Create your models here.
 
 class UserEdus(models.Model):
@@ -90,6 +91,35 @@ class Document(models.Model):
     description = models.CharField(max_length=2000, blank=True)
     document = models.FileField(upload_to='MEDIA_ROOT/documents/')
     uploaded_at = models.DateTimeField(auto_now_add=True)
+
+
+
+# ratchet implementation, check signal pk = 1, this is the MASTER QUESTION SIGNAL
+# if new_signal == TRUE, then there are new questions
+class NewUpdateSign(models.Model):
+    new_signal = models.BooleanField(null=False, default=False)
+    last_update = models.DateTimeField(auto_now_add=True)
+    signal_id = models.CharField(null=False,blank= True, max_length= 200)
+
+    @receiver(post_save, sender=Question)
+    def update_signal(sender, instance, created, **kwargs):
+        if created:
+            # UserEdus.objects.create(user=instance)
+            # UserEdus.objects.getObject
+            try:
+                print('DEBUG OBJECT FOUND')
+                update_signal = NewUpdateSign.objects.get(pk=1)
+                update_signal.new_signal = True
+                update_signal.save()
+            except NewUpdateSign.DoesNotExist:
+                print('OBJECT NOT FOUND')
+                # technically this should never happen
+                create_master_signal = NewUpdateSign(new_signal=True, last_update= date.today(), signal_id= 'MASTER')
+                create_master_signal.save()
+                # raise Http404("No MyModel matches the given query.")
+
+        # instance.newupdatesign.save()
+
 
 
 

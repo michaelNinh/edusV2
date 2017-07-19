@@ -151,7 +151,7 @@ class ReplyCreate(CreateView):
 # login mixin can be inserted here
 class QuestionCreate(CreateView):
     """
-    creates a Quetion object
+    creates a Question object
     """
     model = Question #specify which model can be created here
     fields = ['title', 'content','image'] # which fields can be openly editted
