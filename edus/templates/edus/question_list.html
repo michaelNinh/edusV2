@@ -5,14 +5,29 @@
 {% if question_list %}
 
 
-<ul>
-
 {% for question in question_list %}
+<div class="row" id="questionListDiv">
+
+    <div class="col-md-1"></div>
+
+
+
+        <ul>
 <li> points {{ question.points }} Solution: {{ question.solution_found }} {{ question.title }}
-    <a href="{{ question.pk }}">Enter thread</a>
+    <a href="{% url 'edus:question_detail' question.pk %}">Enter thread</a>
     </li>
-{% endfor %}
 </ul>
+
+
+
+
+
+</div>
+
+
+{% endfor %}
+
+
 
 {% else %}
 
