@@ -13,7 +13,9 @@ def index(request):
     """
     View function for home page of site.
     """
-    # Render the HTML template index.html
+
+    num_visits = request.session.get('num_visits', 0) #creating a session object, with attr
+
     return render(
         request,
         'index.html',

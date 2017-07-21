@@ -6,18 +6,9 @@
 
 
 {% for question in question_list %}
-<div class="row" id="questionListDiv">
 
-    <div class="col-md-2"></div>
-
-    <div class="container_row">
+        <a href="{% url 'edus:question_detail' question.pk %}">Enter thread</a>
         <p>points {{ question.points }} Solution: {{ question.solution_found }} {{ question.title }}</p>
-    </div>
-
-    <div class="container_row"> <div class="layer2"> <a href="{% url 'edus:question_detail' question.pk %}">Enter thread</a>  </div>
-
-</div>
-
 
 {% endfor %}
 
