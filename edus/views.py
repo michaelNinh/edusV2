@@ -20,12 +20,21 @@ def index(request):
         request,
         'index.html',
     )
-
+# all questions
 class QuestionListView(generic.ListView):
     model = Question
     paginate_by = 10
 
+    def get_context_data(self, **kwargs):
+        context = super(QuestionListView, self).get_context_data(**kwargs)
 
+        # code for *NEW* notification
+        new_q_val = self.request.session.get('new_question_val', 0) #get new_question_val
+        self.request.session['old_question_val'] = new_q_val #set the new to the old
+
+        return context
+
+# view for questions asked by logged in user
 class MyQuestionListView(generic.ListView):
     model = Question
     paginate_by = 10
@@ -33,9 +42,10 @@ class MyQuestionListView(generic.ListView):
     template_name = 'edus/myquestion_list.html'
 
     def get_queryset(self):
+
         return self.request.user.useredus.question_set.all()
 
-
+# view for unanswered questions
 class OpenQuestionListView(generic.ListView):
     model = Question
     paginate_by = 10
