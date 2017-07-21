@@ -4,7 +4,7 @@ import pytz
 from django.utils import timezone
 
 
-from edus.models import NewUpdateSign, Question
+from edus.models import Question
 
 
 def add_variable_to_context(request):

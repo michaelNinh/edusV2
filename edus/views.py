@@ -42,6 +42,8 @@ class MyQuestionListView(generic.ListView):
     template_name = 'edus/myquestion_list.html'
 
     def get_queryset(self):
+        self.request.user.useredus.new_replies = False
+        self.request.user.useredus.save()
 
         return self.request.user.useredus.question_set.all()
 
@@ -147,11 +149,14 @@ class ReplyCreate(CreateView):
         add associate blog and author to form.
         """
         #this is setting the author of the form
-        #this has to be in lowercase for the association to work!
         form.instance.author = self.request.user.useredus
-        #associate comment with blog based on passed
-        form.instance.parent_question = get_object_or_404(Question, pk = self.kwargs['pk'])
+        #associate comment with Question based on passed
+        form.instance.parent_question = get_object_or_404(Question, pk= self.kwargs['pk'])
         #the super class carried the validator function
+
+        self.request.user.useredus.new_replies = True
+        self.request.user.useredus.save()
+
         return super(ReplyCreate, self).form_valid(form)
 
     def get_success_url(self):
