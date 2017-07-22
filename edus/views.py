@@ -47,10 +47,7 @@ class MyQuestionListView(generic.ListView):
     template_name = 'edus/myquestion_list.html'
 
     def get_queryset(self):
-        # THIS WILL TARGET THE LOGGED IN USER / NOT THE AUTHOR
-        # self.request.user.useredus.new_replies = False
-        # self.request.user.useredus.save()
-
+        # code for monitoring total number of replies
         new_reply_val = self.request.session.get('new_reply_val', 0)  # get new_reply_value
         self.request.session['old_reply_val'] = new_reply_val  # set the new to the old
 
@@ -73,9 +70,9 @@ class QuestionDetailView(generic.DetailView):
         context = super(QuestionDetailView, self).get_context_data(**kwargs)
 
         # set Question new_replies to false after user views the details
-        # parent_question = get_object_or_404(Question, pk=self.kwargs['pk']) #specify which question is being viewed
-        # parent_question.new_replies = False #set to false
-        # parent_question.save() #save
+        parent_question = get_object_or_404(Question, pk=self.kwargs['pk']) #specify which question is being viewed
+        parent_question.new_replies = False #set to false
+        parent_question.save() #save
 
         return context
 
@@ -180,15 +177,6 @@ class ReplyCreate(CreateView):
         # parent_question.author.new_replies = True  #inform the author there are new replies
         parent_question.new_replies = True  # inform the question there are new replies
         parent_question.save()
-
-        parent_question_author = get_object_or_404(UserEdus, pk=parent_question.author.pk)
-        parent_question_author.new_replies = True
-        parent_question_author.save()
-        print('~~~~~~~~~~')
-        print(parent_question_author)
-        print('~~~~~~~~~_')
-        print(parent_question_author.new_replies)
-
 
         return super(ReplyCreate, self).form_valid(form)
 
