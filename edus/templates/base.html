@@ -26,14 +26,14 @@
     {% endif %}
 
     <!--fake dynamic labeling of NEW-->
-    {% if new_questions == 'true' %}
+    {% if new_questions_flag == 'true' %}
     <li role="presentation"><a href="{% url 'edus:questions' %}">All questions *NEW*</a></li>
     {% else %}
     <li role="presentation"><a href="{% url 'edus:questions' %}">All questions</a></li>
     {% endif %}
 
     <!--fake dynamic label of NEW REPLIES-->
-    {% if user.useredus.new_replies == True %}
+    {% if new_reply_flag == 'true' %}
     <li role="presentation"><a href="{% url 'edus:my_questions' %}">My questions*NEW*</a></li>
     {% else %}
     <li role="presentation"><a href="{% url 'edus:my_questions' %}">My questions</a></li>
@@ -47,6 +47,8 @@
 </ul>
 
 <body>
+<h1>{{ user.useredus.new_replies }}</h1>
+<h2>{{ user.useredus }}</h2>
 
 
 <div class="row">

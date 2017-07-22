@@ -32,6 +32,11 @@ class QuestionListView(generic.ListView):
         new_q_val = self.request.session.get('new_question_val', 0) #get new_question_val
         self.request.session['old_question_val'] = new_q_val #set the new to the old
 
+        context['question_list'] = Question.objects.all().order_by('-post_date')
+
+        # get_object_or_404(Question, pk=self.kwargs['pk'])
+
+
         return context
 
 # view for questions asked by logged in user
@@ -42,8 +47,12 @@ class MyQuestionListView(generic.ListView):
     template_name = 'edus/myquestion_list.html'
 
     def get_queryset(self):
-        self.request.user.useredus.new_replies = False
-        self.request.user.useredus.save()
+        # THIS WILL TARGET THE LOGGED IN USER / NOT THE AUTHOR
+        # self.request.user.useredus.new_replies = False
+        # self.request.user.useredus.save()
+
+        new_reply_val = self.request.session.get('new_reply_val', 0)  # get new_reply_value
+        self.request.session['old_reply_val'] = new_reply_val  # set the new to the old
 
         return self.request.user.useredus.question_set.all().order_by('-new_replies')
 
@@ -63,10 +72,10 @@ class QuestionDetailView(generic.DetailView):
     def get_context_data(self, **kwargs):
         context = super(QuestionDetailView, self).get_context_data(**kwargs)
 
-        # set new_replies to false after user views the details
-        parent_question = get_object_or_404(Question, pk=self.kwargs['pk']) #specify which question is being viewed
-        parent_question.new_replies = False #set to false
-        parent_question.save() #save
+        # set Question new_replies to false after user views the details
+        # parent_question = get_object_or_404(Question, pk=self.kwargs['pk']) #specify which question is being viewed
+        # parent_question.new_replies = False #set to false
+        # parent_question.save() #save
 
         return context
 
@@ -168,11 +177,18 @@ class ReplyCreate(CreateView):
         form.instance.parent_question = parent_question
         #the super class carried the validator function
 
-        self.request.user.useredus.new_replies = True #inform users there are new replies to authored questions
-        self.request.user.useredus.save()
-
-        parent_question.new_replies = True #inform question that there are new replies
+        # parent_question.author.new_replies = True  #inform the author there are new replies
+        parent_question.new_replies = True  # inform the question there are new replies
         parent_question.save()
+
+        parent_question_author = get_object_or_404(UserEdus, pk=parent_question.author.pk)
+        parent_question_author.new_replies = True
+        parent_question_author.save()
+        print('~~~~~~~~~~')
+        print(parent_question_author)
+        print('~~~~~~~~~_')
+        print(parent_question_author.new_replies)
+
 
         return super(ReplyCreate, self).form_valid(form)
 

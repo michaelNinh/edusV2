@@ -13,7 +13,9 @@ class UserEdus(models.Model):
     user = models.OneToOneField(User, on_delete=models.SET_NULL, null=True)
     email = models.CharField(max_length=500, help_text="Your email", null=True)
     bio = models.TextField(max_length=400, help_text="Enter your bio details here.")
-    new_replies = models.BooleanField(default=False)
+    new_replies = models.BooleanField(default=False) #flag for displaying *NEW* label or not, NOT SURE IF NEEDED
+    new_replies_value = models.IntegerField(default=0) #measure number of replies, NOT SURE IF NEEDED
+
 
     # a feature like this would return the profile page?
     # def get_absolute_url(self):

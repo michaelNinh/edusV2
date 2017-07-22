@@ -7,8 +7,8 @@
 
         <a href="{% url 'edus:question_detail' question.pk %}">Enter thread</a>
         <p>points {{ question.points }} Solution: {{ question.solution_found }} {{ question.title }} </p>
-        <br>
         <p>New replies: {{ question.new_replies }}</p>
+        <p>Post Date: {{ question.post_date }}</p>
 
 {% endfor %}
 
