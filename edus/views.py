@@ -45,7 +45,7 @@ class MyQuestionListView(generic.ListView):
         self.request.user.useredus.new_replies = False
         self.request.user.useredus.save()
 
-        return self.request.user.useredus.question_set.all()
+        return self.request.user.useredus.question_set.all().order_by('-new_replies')
 
 # view for unanswered questions
 class OpenQuestionListView(generic.ListView):
@@ -58,6 +58,19 @@ class OpenQuestionListView(generic.ListView):
 
 class QuestionDetailView(generic.DetailView):
     model = Question
+
+
+    def get_context_data(self, **kwargs):
+        context = super(QuestionDetailView, self).get_context_data(**kwargs)
+
+        # set new_replies to false after user views the details
+        parent_question = get_object_or_404(Question, pk=self.kwargs['pk']) #specify which question is being viewed
+        parent_question.new_replies = False #set to false
+        parent_question.save() #save
+
+        return context
+
+
 
 ###i could inc/dec the number text on the frontend while backend updates
 
@@ -151,11 +164,15 @@ class ReplyCreate(CreateView):
         #this is setting the author of the form
         form.instance.author = self.request.user.useredus
         #associate comment with Question based on passed
-        form.instance.parent_question = get_object_or_404(Question, pk= self.kwargs['pk'])
+        parent_question = get_object_or_404(Question, pk= self.kwargs['pk'])
+        form.instance.parent_question = parent_question
         #the super class carried the validator function
 
-        self.request.user.useredus.new_replies = True
+        self.request.user.useredus.new_replies = True #inform users there are new replies to authored questions
         self.request.user.useredus.save()
+
+        parent_question.new_replies = True #inform question that there are new replies
+        parent_question.save()
 
         return super(ReplyCreate, self).form_valid(form)
 

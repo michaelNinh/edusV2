@@ -48,6 +48,8 @@ class Question(models.Model):
 
     image = models.ImageField(upload_to='MEDIA_ROOT/documents/', null=True, blank=True)
 
+    new_replies = models.BooleanField(default=False)
+
     #how to include media files like pictures??
 
     def get_absolute_url(self):

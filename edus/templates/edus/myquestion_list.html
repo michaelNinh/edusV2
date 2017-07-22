@@ -1,1 +1,20 @@
-{% extends 'edus/question_list.html' %}
+{% extends 'base.html' %}
+{% block content %}
+{% if question_list %}
+
+
+{% for question in question_list %}
+
+        <a href="{% url 'edus:question_detail' question.pk %}">Enter thread</a>
+        <p>points {{ question.points }} Solution: {{ question.solution_found }} {{ question.title }} </p>
+        <br>
+        <p>New replies: {{ question.new_replies }}</p>
+
+{% endfor %}
+
+{% else %}
+
+<h1> No questions have been asked </h1>
+
+{% endif  %}
+{% endblock %}
